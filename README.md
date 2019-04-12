@@ -23,7 +23,7 @@ Abaixo algumas capturas de tela da aplicação:
 
 ###### Listagem de To Do
 
-![alt text](/../<branch name>/public/img/docs/list.PNG?raw=true )
+![alt text](/public/img/docs/list.PNG)
 
 ###### Modal para cadastro de To Do
 
@@ -33,4 +33,4 @@ Abaixo algumas capturas de tela da aplicação:
 
 Além dos requisitos solicitados, desenvolvi a busca de um determinado item.
 
-![alt  text](public\img\docs\search.png)
+![alt  text](public/img/docs/search.png)

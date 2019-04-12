@@ -1,0 +1,10 @@
+.tag-status-todo-pendent {
+  background-color: #2feb5a;
+  font-size: 15px;
+  border-radius: 10%;
+}
+.tag-status-todo-conc {
+  background-color: #eb5454;
+  font-size: 15px;
+  border-radius: 10%;
+}

@@ -23,14 +23,14 @@ Abaixo algumas capturas de tela da aplicação:
 
 ###### Listagem de To Do
 
-![Alt text](public\img\docs\list.PNG?raw=true "Listagem")
+![alt  text](public\img\docs\list.PNG)
 
 ###### Modal para cadastro de To Do
 
-![Alt text](public\img\docs\modal.PNG?raw=true "Modal")
+![alt  text](public\img\docs\modal.PNG)
 
 ###### Busca de To Do pelo titulo
 
 Além dos requisitos solicitados, desenvolvi a busca de um determinado item.
 
-![Alt text](public\img\docs\search.png?raw=true "Modal")
+![alt  text](public\img\docs\search.png)

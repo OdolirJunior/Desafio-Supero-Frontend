@@ -23,7 +23,7 @@ Abaixo algumas capturas de tela da aplicação:
 
 ###### Listagem de To Do
 
-![alt  text](public\img\docs\list.PNG)
+![Alt text](/../<branch name>/public/img/docs/list.PNG?raw=true )
 
 ###### Modal para cadastro de To Do
 

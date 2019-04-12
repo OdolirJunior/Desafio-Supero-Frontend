@@ -23,11 +23,11 @@ Abaixo algumas capturas de tela da aplicação:
 
 ###### Listagem de To Do
 
-![Alt text](/../<branch name>/public/img/docs/list.PNG?raw=true )
+![alt text](/../<branch name>/public/img/docs/list.PNG?raw=true )
 
 ###### Modal para cadastro de To Do
 
-![alt  text](public\img\docs\modal.PNG)
+![alt  text](public/img/docs/modal.PNG)
 
 ###### Busca de To Do pelo titulo
 

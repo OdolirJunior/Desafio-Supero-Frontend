@@ -6,7 +6,7 @@ import Login from "./Containers/Login/Login";
 class Routes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLogged: false };
+    this.state = { isLogged: true };
   }
 
   render() {

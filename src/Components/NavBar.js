@@ -11,6 +11,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className="topnav">
+        <h2 className="textoprincipal">To-dos</h2>
         {this.state.isLogged ? (
           <div className="login-container">
             <input type="text" placeholder="Username" name="username" />

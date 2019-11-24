@@ -342,8 +342,8 @@ class Todo extends Component {
           {groups &&
             groups.length > 0 &&
             groups.map((group, index) => (
-              <div class="card">
-                <div>
+              <div className="card">
+                <div className="container">
                   <h2>{group.title}</h2>
                   <DeleteIconButton onClick={e => this.handleDeleteGroup(group.id, e)} />
                   <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdateGroup(group.id, e)} ariaLabel="Editar" />
@@ -353,8 +353,8 @@ class Todo extends Component {
                   todos.length > 0 &&
                   todos.map((row, index) =>
                     row.groupId.id === group.id ? (
-                      <div class="card-todo">
-                        <div class="container">
+                      <div className="card-todo">
+                        <div className="container">
                           <span className={!row.status ? "tag-status-todo-pendent" : "tag-status-todo-conc"}>
                             {!row.status ? "Pendente" : "Concluido"}
                           </span>

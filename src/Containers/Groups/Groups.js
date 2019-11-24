@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import "./Groups.css"
 
 class Groups extends React.Component {
   render() {
@@ -7,8 +8,8 @@ class Groups extends React.Component {
 
     return (
       <div>
-        <button color="success" size="lg" onClick={handleOpenModal}>
-          + ADICIONAR GRUPO
+        <button color="secondary" className="botaoadicionartodo" onClick={handleOpenModal}>
+          ADICIONAR GRUPO
         </button>
         <Modal isOpen={open}>
           <h4>Adicionar Grupo</h4>

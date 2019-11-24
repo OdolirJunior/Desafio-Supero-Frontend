@@ -7,6 +7,7 @@ import UpdateIconButton from "../../Components/UpdateIconButton";
 import FinishTaskIconButton from "../../Components/FinishTaskIconButton";
 import "./Todo.css";
 const API = "/todos";
+const API_GROUP = "/grouptodos";
 
 class Todo extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Todo extends Component {
         title: "",
         content: "",
         status: false,
+        groupId: {},
         createdAt: 0,
         updatedAt: 0
       },
@@ -25,12 +27,14 @@ class Todo extends Component {
         title: ""
       },
       search: "",
-      open: false
+      open: false,
+      openGroup: false
     };
   }
 
   componentDidMount() {
     this.findAll();
+    this.findAllGroup();
   }
 
   handleOpenModal = () => {
@@ -40,6 +44,15 @@ class Todo extends Component {
   handleCloseModal = () => {
     this.setState({ open: false });
     this.setState({ todo: {} });
+  };
+
+  handleOpenModalGroup = () => {
+    this.setState({ openGroup: true });
+  };
+
+  handleCloseModalGroup = () => {
+    this.setState({ openGroup: false });
+    this.setState({ group: {} });
   };
 
   handleFinishTask = id => {
@@ -53,10 +66,28 @@ class Todo extends Component {
     }).then(this.findAll());
   };
 
-  onChangeModal = event => {
+  onChangeModal = async event => {
+    if (event.target.name === "groupId") {
+      let group = await this.state.groups.filter(item => item.id == event.target.value)[0];
+      await this.setState({
+        todo: {
+          ...this.state.todo,
+          groupId: group
+        }
+      });
+    } else {
+      await this.setState({
+        todo: {
+          ...this.state.todo,
+          [event.target.name]: event.target.value
+        }
+      });
+    }
+  };
+  onChangeModalGroup = event => {
     this.setState({
-      todo: {
-        ...this.state.todo,
+      group: {
+        ...this.state.group,
         [event.target.name]: event.target.value
       }
     });
@@ -72,7 +103,44 @@ class Todo extends Component {
     }
     this.handleCloseModal();
   };
-  handleSubmitGroup = () => {};
+  handleSubmitGroup = () => {
+    let data = {};
+    data = this.state.group;
+    if (!!this.state.group.id) {
+      this.handleUpdateGroup(data);
+    } else {
+      this.handleSaveGroup(data);
+    }
+    this.handleCloseModal();
+  };
+
+  handleOpenUpdateGroup(id) {
+    const todoToUpdate = this.state.groups.filter(item => item.id === id);
+    this.setState({ group: todoToUpdate[0] });
+    this.handleOpenModalGroup();
+  }
+
+  handleUpdateGroup = data => {
+    fetch(`${API_GROUP}/${data.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    }).then(this.findAllGroup());
+  };
+
+  async handleSaveGroup(data) {
+    data.status = false;
+    try {
+      await fetch(`${API_GROUP}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      await this.findAllGroup();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   handleUpdate = data => {
     fetch(`${API}/${data.id}`, {
@@ -102,9 +170,19 @@ class Todo extends Component {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => response.json())
-      .then(todos => this.setState({ todos }));
+      .then(todos => {
+        this.setState({ todos });
+      });
   };
 
+  findAllGroup = () => {
+    fetch(API_GROUP, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(response => response.json())
+      .then(groups => this.setState({ groups }));
+  };
   handleFindOne = () => {
     const { search } = this.state.search;
     const todoSearchItem = this.state.todos.filter(item => item.title === search);
@@ -135,6 +213,20 @@ class Todo extends Component {
         console.log(error);
       });
   }
+  handleDeleteGroup(id) {
+    fetch(`${API_GROUP}/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(() => {
+        this.setState({
+          groups: this.state.groups.filter(row => row.id !== id)
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   handleOpenUpdate(id) {
     const todoToUpdate = this.state.todos.filter(item => item.id === id);
@@ -143,21 +235,22 @@ class Todo extends Component {
   }
 
   render() {
-    const { todos } = this.state;
+    const { todos, groups } = this.state;
     return (
       <div>
         <NavBar />
         <Groups
           group={this.state.group}
-          submit={this.handleSubmit}
-          onChangeModal={this.onChangeModal}
-          handleOpenModal={e => this.handleOpenModal(e)}
-          handleCloseModal={e => this.handleCloseModal(e)}
-          open={this.state.open}
+          submit={this.handleSubmitGroup}
+          onChangeModal={this.onChangeModalGroup}
+          handleOpenModal={e => this.handleOpenModalGroup(e)}
+          handleCloseModal={e => this.handleCloseModalGroup(e)}
+          open={this.state.openGroup}
         />
         <ModalTodo
           todo={this.state.todo}
-          submit={this.handleSubmitGroup}
+          groups={this.state.groups}
+          submit={this.handleSubmit}
           onChangeModal={this.onChangeModal}
           handleOpenModal={e => this.handleOpenModal(e)}
           handleCloseModal={e => this.handleCloseModal(e)}
@@ -165,16 +258,32 @@ class Todo extends Component {
         />
 
         <div className="div-todos">
-          {todos.length > 0 &&
-            todos.map((row, index) => (
+          {groups &&
+            groups.length > 0 &&
+            groups.map((group, index) => (
               <div class="card">
-                <div class="container">
-                  {!row.status ? "Pendente" : "Concluído"}
-                  <h4>{row.title}</h4>
-                  <FinishTaskIconButton handleFinishTask={e => this.handleFinishTask(row.id, e)} />
-                  <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
-                  <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdate(row.id, e)} ariaLabel="Editar" />
+                <div>
+                  <h2>{group.title}</h2>
+                  <DeleteIconButton onClick={e => this.handleDeleteGroup(group.id, e)} />
+                  <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdateGroup(group.id, e)} ariaLabel="Editar" />
                 </div>
+                {todos &&
+                  todos.length > 0 &&
+                  todos.map((row, index) =>
+                    row.groupId.id === group.id ? (
+                      <div class="card">
+                        <div class="container">
+                          {!row.status ? "Pendente" : "Concluído"}
+                          <h4>{row.title}</h4>
+                          <FinishTaskIconButton handleFinishTask={e => this.handleFinishTask(row.id, e)} />
+                          <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
+                          <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdate(row.id, e)} ariaLabel="Editar" />
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )
+                  )}
               </div>
             ))}
         </div>

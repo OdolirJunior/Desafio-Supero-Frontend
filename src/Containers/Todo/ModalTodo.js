@@ -4,7 +4,7 @@ import "./ModalTodo.css";
 
 class ModalTodo extends React.Component {
   render() {
-    const { todo, submit, onChangeModal, handleOpenModal, handleCloseModal, open } = this.props;
+    const { todo, submit, onChangeModal, handleOpenModal, handleCloseModal, open, groups } = this.props;
 
     return (
       <div>
@@ -40,12 +40,26 @@ class ModalTodo extends React.Component {
                 onChange={event => onChangeModal(event)}
               />
             </div>
+            <div>
+              <select name="groupId" value={todo.group} required className="form-control" onChange={event => onChangeModal(event)}>
+                {groups &&
+                  groups.length > 0 &&
+                  groups.map(group => (
+                    <option className="form-control" value={group.id}>
+                      {group.title}
+                    </option>
+                  ))}
+                <option className="form-control" value={null} selected="selected">
+                  {""}
+                </option>
+              </select>
+            </div>
           </div>
           <div>
             <button color="secondary" onClick={handleCloseModal}>
               CANCELAR
             </button>
-            <button color="primary" onClick={submit} disabled={!todo.title}>
+            <button color="primary" onClick={submit} disabled={!todo.title || todo.group === null}>
               SALVAR
             </button>
           </div>

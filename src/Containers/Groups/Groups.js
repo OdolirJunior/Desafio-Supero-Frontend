@@ -7,7 +7,6 @@ class Groups extends React.Component {
 
     return (
       <div>
-        {console.log(this.props)}
         <button color="success" size="lg" onClick={handleOpenModal}>
           + ADICIONAR GRUPO
         </button>

@@ -14,7 +14,7 @@ class NavBar extends React.Component {
         {this.state.isLogged ? (
           <div className="login-container">
             <input type="text" placeholder="Username" name="username" />
-            <input type="text" placeholder="Password" name="psw" />
+            <input type="password" placeholder="Password" name="psw" />
           </div>
         ) : (
           <div className="login-container">Meu nome</div>

@@ -27,3 +27,7 @@ button {
 .div-todos {
   display: flex;
 }
+
+.center {
+  text-align: center;
+}

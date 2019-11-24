@@ -6,7 +6,7 @@ import Login from "./Containers/Login/Login";
 class Routes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLogged: true };
+    this.state = { isLogged: false };
   }
 
   render() {
@@ -14,12 +14,13 @@ class Routes extends React.Component {
       <Router history={this.props.history}>
         <Switch>
           <Route path="/todos" exact component={() => <Todo />} />
+          <Route path="/" exact component={() => <Todo />} />
         </Switch>
       </Router>
     ) : (
       <Router history={this.props.history}>
         <Switch>
-          <Route path="/login" exact component={() => <Login />} />
+          <Route path="/*" exact component={() => <Login />} />
         </Switch>
       </Router>
     );

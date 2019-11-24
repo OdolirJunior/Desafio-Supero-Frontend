@@ -1,20 +1,19 @@
 import React from "react";
 import Modal from "react-modal";
+import AddIconButton from "../../Components/AddIconButton";
 import "./ModalTodo.css";
 
 class ModalTodo extends React.Component {
   render() {
-    const { todo, submit, onChangeModal, handleOpenModal, handleCloseModal, open, groups } = this.props;
+    const { todo, submit, onChangeModal, handleOpenModal, handleCloseModal, open } = this.props;
 
     return (
-      <div>
-        <button color="success" size="lg" onClick={handleOpenModal}>
-          + ADICIONAR
-        </button>
+      <div className="todo-item-div">
+        <AddIconButton handleOpen={handleOpenModal} />
         <Modal isOpen={open}>
           <h4>Adicionar To Do</h4>
           <div>
-            <span className={!todo.status ? "tag-status-todo-pendent" : "tag-status-todo-conc"}>{!todo.status ? "Pendente" : "Concluido"}</span>
+            <span className={!todo.status ? "tag-status-todo-pendent" : "tag-status-todo-conc"}>{!todo.status ? "Pendente" : "Concluído"}</span>
 
             <div className="form-group">
               <input
@@ -39,20 +38,6 @@ class ModalTodo extends React.Component {
                 value={todo.content}
                 onChange={event => onChangeModal(event)}
               />
-            </div>
-            <div>
-              <select name="groupId" value={todo.group} required className="form-control" onChange={event => onChangeModal(event)}>
-                {groups &&
-                  groups.length > 0 &&
-                  groups.map(group => (
-                    <option className="form-control" value={group.id}>
-                      {group.title}
-                    </option>
-                  ))}
-                <option className="form-control" value={null} selected="selected">
-                  {""}
-                </option>
-              </select>
             </div>
           </div>
           <div>

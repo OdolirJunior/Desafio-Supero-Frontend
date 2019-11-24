@@ -37,6 +37,7 @@ class ModalTodo extends React.Component {
               />
             </div>
           </div>
+
           <div>
             <button color="secondary" onClick={handleCloseModal}>
               CANCELAR

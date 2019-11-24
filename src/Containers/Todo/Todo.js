@@ -3,7 +3,6 @@ import NavBar from "../../Components/NavBar";
 import ModalTodo from "./ModalTodo";
 import Groups from "../Groups/Groups";
 import TodoItem from "../TodoItem/TodoItem";
-import AddIconButton from "../../Components/AddIconButton";
 import DeleteIconButton from "../../Components/DeleteIconButton";
 import UpdateIconButton from "../../Components/UpdateIconButton";
 import FinishTaskIconButton from "../../Components/FinishTaskIconButton";
@@ -48,8 +47,15 @@ class Todo extends Component {
     this.findAllItem();
   }
 
-  handleOpenModal = () => {
-    this.setState({ open: true });
+  handleOpenModal = async id => {
+    let group = await this.state.groups.filter(item => item.id === id)[0];
+    await this.setState({
+      todo: {
+        ...this.state.todo,
+        groupId: group
+      }
+    });
+    await this.setState({ open: true });
   };
 
   handleCloseModal = () => {
@@ -61,8 +67,15 @@ class Todo extends Component {
     this.setState({ openGroup: true });
   };
 
-  handleOpenModalItem = () => {
-    this.setState({ openTodoItem: true });
+  handleOpenModalItem = async id => {
+    let group = await this.state.todos.filter(item => item.id === id)[0];
+    await this.setState({
+      todoItem: {
+        ...this.state.todoItem,
+        todoId: group
+      }
+    });
+    await this.setState({ openTodoItem: true });
   };
 
   handleCloseModalGroup = () => {
@@ -86,22 +99,12 @@ class Todo extends Component {
   };
 
   onChangeModal = async event => {
-    if (event.target.name === "groupId") {
-      let group = await this.state.groups.filter(item => item.id == event.target.value)[0];
-      await this.setState({
-        todo: {
-          ...this.state.todo,
-          groupId: group
-        }
-      });
-    } else {
-      await this.setState({
-        todo: {
-          ...this.state.todo,
-          [event.target.name]: event.target.value
-        }
-      });
-    }
+    await this.setState({
+      todo: {
+        ...this.state.todo,
+        [event.target.name]: event.target.value
+      }
+    });
   };
   onChangeModalGroup = event => {
     this.setState({
@@ -111,24 +114,13 @@ class Todo extends Component {
       }
     });
   };
-  onChangeModalItem = async event => {
-    if (event.target.name === "todoId") {
-      let group = await this.state.todos.filter(item => item.id == event.target.value)[0];
-      console.log(group);
-      await this.setState({
-        todoItem: {
-          ...this.state.todoItem,
-          todoId: group
-        }
-      });
-    } else {
-      await this.setState({
-        todoItem: {
-          ...this.state.todoItem,
-          [event.target.name]: event.target.value
-        }
-      });
-    }
+  onChangeModalItem = event => {
+    this.setState({
+      todoItem: {
+        ...this.state.todoItem,
+        [event.target.name]: event.target.value
+      }
+    });
   };
 
   handleSubmit = () => {
@@ -305,15 +297,15 @@ class Todo extends Component {
         console.log(error);
       });
   }
-  handleOpenUpdateItem(id) {
-    const todoToUpdate = this.state.items.filter(item => item.id === id);
-    this.setState({ todoItem: todoToUpdate[0] });
-    this.handleOpenModal();
+  async handleOpenUpdateItem(id) {
+    const todoToUpdate = await this.state.items.filter(item => item.id === id);
+    await this.setState({ todoItem: todoToUpdate[0] });
+    await this.handleOpenModalItem(todoToUpdate[0].todoId.id);
   }
-  handleOpenUpdate(id) {
-    const todoToUpdate = this.state.todos.filter(item => item.id === id);
-    this.setState({ todo: todoToUpdate[0] });
-    this.handleOpenModal();
+  async handleOpenUpdate(id) {
+    const todoToUpdate = await this.state.todos.filter(item => item.id === id);
+    await this.setState({ todo: todoToUpdate[0] });
+    await this.handleOpenModal(todoToUpdate[0].groupId.id);
   }
 
   render() {
@@ -329,34 +321,34 @@ class Todo extends Component {
           handleCloseModal={e => this.handleCloseModalGroup(e)}
           open={this.state.openGroup}
         />
-        <ModalTodo
-          todo={this.state.todo}
-          groups={this.state.groups}
-          submit={this.handleSubmit}
-          onChangeModal={this.onChangeModal}
-          handleOpenModal={e => this.handleOpenModal(e)}
-          handleCloseModal={e => this.handleCloseModal(e)}
-          open={this.state.open}
-        />
         <div className="div-todos">
           {groups &&
             groups.length > 0 &&
             groups.map((group, index) => (
-              <div className="card">
+              <div key={group.id} className="card">
                 <div className="container">
                   <h2>{group.title}</h2>
                   <DeleteIconButton onClick={e => this.handleDeleteGroup(group.id, e)} />
                   <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdateGroup(group.id, e)} ariaLabel="Editar" />
+                  <ModalTodo
+                    todo={this.state.todo}
+                    groups={this.state.groups}
+                    submit={this.handleSubmit}
+                    onChangeModal={this.onChangeModal}
+                    handleOpenModal={() => this.handleOpenModal(group.id)}
+                    handleCloseModal={e => this.handleCloseModal(e)}
+                    open={this.state.open}
+                  />
                   <hr />
                 </div>
                 {todos &&
                   todos.length > 0 &&
                   todos.map((row, index) =>
                     row.groupId.id === group.id ? (
-                      <div className="card-todo">
+                      <div key={group.id} className="card-todo">
                         <div className="container">
                           <span className={!row.status ? "tag-status-todo-pendent" : "tag-status-todo-conc"}>
-                            {!row.status ? "Pendente" : "Concluido"}
+                            {!row.status ? "Pendente" : "Concluído"}
                           </span>
                           <h5>{row.title}</h5>
                           <FinishTaskIconButton handleFinishTask={e => this.handleFinishTask(row.id, e)} />
@@ -366,7 +358,7 @@ class Todo extends Component {
                             todoItem={this.state.todoItem}
                             submit={this.handleSubmitItem}
                             onChangeModal={this.onChangeModalItem}
-                            handleOpenModal={e => this.handleOpenModalItem(e)}
+                            handleOpenModal={() => this.handleOpenModalItem(row.id)}
                             handleCloseModal={e => this.handleCloseModalItem(e)}
                             open={this.state.openTodoItem}
                           />
@@ -374,11 +366,11 @@ class Todo extends Component {
                             items.length > 0 &&
                             items.map((item, index) =>
                               item.todoId.id === row.id ? (
-                                <div>
+                                <div key={item.id}>
                                   <hr />
                                   <h6>{item.title}</h6>
                                   <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
-                                  <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdateItem(row.id, e)} ariaLabel="Editar" />
+                                  <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdateItem(item.id, e)} ariaLabel="Editar" />
                                   <hr />
                                 </div>
                               ) : (

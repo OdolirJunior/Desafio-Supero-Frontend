@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 class AddIconButton extends React.Component {
   state = {
     open: false
@@ -15,8 +15,8 @@ class AddIconButton extends React.Component {
 
   render() {
     return (
-      <button className="btn" onClick={this.props.handleOpen} title="Editar tarefa">
-        <FaPlusCircle />
+      <button className="btn" onClick={this.props.handleOpen} title="Adicionar item">
+        <FaPlus />
       </button>
     );
   }

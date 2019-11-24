@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NavBar from "../../Components/NavBar";
+import NavBarLogged from "../../Components/NavBarLogged";
 import ModalTodo from "./ModalTodo";
 import Groups from "../Groups/Groups";
 import TodoItem from "../TodoItem/TodoItem";
@@ -320,7 +320,7 @@ class Todo extends Component {
     const { todos, groups, items } = this.state;
     return (
       <div>
-        <NavBar />
+        <NavBarLogged />
         <Groups
           group={this.state.group}
           submit={this.handleSubmitGroup}

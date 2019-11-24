@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NavBar from "../../Components/NavBar";
+import NavBarUnlogged from "../../Components/NavBarUnlogged";
 import Modal from "react-modal";
 import "./Logins.css"
 
@@ -23,7 +23,7 @@ class Login extends Component {
     return  (
       <div>
 
-        <NavBar />
+        <NavBarUnlogged />
 
         <div>
           <br/>

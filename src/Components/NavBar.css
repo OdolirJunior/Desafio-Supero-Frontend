@@ -11,9 +11,25 @@
 .login-container {
   float: right;
   margin: 1%;
-  padding: 6px 10px;
+  padding: 5px;
+  font-size: 16px;
+  display: flex;
 }
 .textoprincipal {
   position: absolute;
   margin: 1%;
+}
+.login-container input[type=text] {
+    border: none;
+    margin-right: 1%;
+}
+.login-container input[type=password] {
+    border: none;
+    margin-right: 0.5%;
+}
+.login-container button {
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    margin-right: 1%;
 }

@@ -277,7 +277,7 @@ class Todo extends Component {
                   todos.length > 0 &&
                   todos.map((row, index) =>
                     row.groupId.id === group.id ? (
-                      <div class="card">
+                      <div class="card-todo">
                         <div class="container">
                           {!row.status ? "Pendente" : "Concluído"}
                           <h4>{row.title}</h4>

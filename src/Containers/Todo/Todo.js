@@ -28,6 +28,11 @@ class Todo extends Component {
       group: {
         title: ""
       },
+      todoItem: {
+        title: "",
+        content: "",
+        todoId: {}
+      },
       search: "",
       open: false,
       openGroup: false
@@ -258,7 +263,6 @@ class Todo extends Component {
           handleCloseModal={e => this.handleCloseModal(e)}
           open={this.state.open}
         />
-
         <div className="div-todos">
           {groups &&
             groups.length > 0 &&
@@ -280,7 +284,14 @@ class Todo extends Component {
                           <FinishTaskIconButton handleFinishTask={e => this.handleFinishTask(row.id, e)} />
                           <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
                           <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdate(row.id, e)} ariaLabel="Editar" />
-                          <AddIconButton />
+                          <TodoItem
+                            todoItem={this.state.todoItem}
+                            submit={this.handleSubmit}
+                            onChangeModal={this.onChangeModal}
+                            handleOpenModal={e => this.handleOpenModal(e)}
+                            handleCloseModal={e => this.handleCloseModal(e)}
+                            open={this.state.open}
+                          />
                         </div>
                       </div>
                     ) : (

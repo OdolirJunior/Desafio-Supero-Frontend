@@ -1,22 +1,17 @@
 import React from "react";
 import Modal from "react-modal";
-
+import AddIconButton from "../../Components/AddIconButton";
+import "./TodoItem.css";
 class ModalTodo extends React.Component {
   render() {
     const { todoItem, submit, onChangeModal, handleOpenModal, handleCloseModal, open, groups } = this.props;
 
     return (
-      <div>
-        <button color="success" size="lg" onClick={handleOpenModal}>
-          + ADICIONAR ITEM
-        </button>
+      <div className="todo-item-div">
+        <AddIconButton handleOpen={handleOpenModal} />
         <Modal isOpen={open}>
           <h4>Adicionar item</h4>
           <div>
-            <span className={!todoItem.status ? "tag-status-todo-pendent" : "tag-status-todo-conc"}>
-              {!todoItem.status ? "Pendente" : "Concluido"}
-            </span>
-
             <div className="form-group">
               <input
                 placeholder="Titulo"

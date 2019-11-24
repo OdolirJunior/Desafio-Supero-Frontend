@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import NavBar from "../../Components/NavBar";
 import ModalTodo from "./ModalTodo";
 import Groups from "../Groups/Groups";
+import TodoItem from "../TodoItem/TodoItem";
+import AddIconButton from "../../Components/AddIconButton";
 import DeleteIconButton from "../../Components/DeleteIconButton";
 import UpdateIconButton from "../../Components/UpdateIconButton";
 import FinishTaskIconButton from "../../Components/FinishTaskIconButton";
@@ -278,6 +280,7 @@ class Todo extends Component {
                           <FinishTaskIconButton handleFinishTask={e => this.handleFinishTask(row.id, e)} />
                           <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
                           <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdate(row.id, e)} ariaLabel="Editar" />
+                          <AddIconButton />
                         </div>
                       </div>
                     ) : (

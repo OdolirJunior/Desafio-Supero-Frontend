@@ -4,13 +4,13 @@ import AddIconButton from "../../Components/AddIconButton";
 import "./TodoItem.css";
 class ModalTodo extends React.Component {
   render() {
-    const { todoItem, submit, onChangeModal, handleOpenModal, handleCloseModal, open, groups } = this.props;
+    const { todoItem, submit, onChangeModal, handleOpenModal, handleCloseModal, open } = this.props;
 
     return (
       <div className="todo-item-div">
         <AddIconButton handleOpen={handleOpenModal} />
         <Modal isOpen={open}>
-          <h4>Adicionar item</h4>
+          <h4>Adicionar item do todo</h4>
           <div>
             <div className="form-group">
               <input

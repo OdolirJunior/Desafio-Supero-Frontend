@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import history from "./history";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import App from "./App";
+import Routes from "./Routes";
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Routes history={history} />, document.getElementById("root"));
 
 serviceWorker.unregister();

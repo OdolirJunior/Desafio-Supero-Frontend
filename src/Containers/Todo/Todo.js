@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import { Nav, NavItem, Navbar, NavbarBrand, Table } from "reactstrap";
+import NavBar from "../../Components/NavBar";
 import ModalTodo from "./ModalTodo";
-import DeleteIconButton from "./Components/DeleteIconButton";
-import UpdateIconButton from "./Components/UpdateIconButton";
-import FinishTaskIconButton from "./Components/FinishTaskIconButton";
-import FindIconButton from "./Components/FindIconButton";
-
-import "./App.css";
+import Groups from "../Groups/Groups";
+import DeleteIconButton from "../../Components/DeleteIconButton";
+import UpdateIconButton from "../../Components/UpdateIconButton";
+import FinishTaskIconButton from "../../Components/FinishTaskIconButton";
+import "./Todo.css";
 const API = "/todos";
 
-class App extends Component {
+class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      groups: [],
       todos: [],
       todo: {
         title: "",
@@ -20,6 +20,9 @@ class App extends Component {
         status: false,
         createdAt: 0,
         updatedAt: 0
+      },
+      group: {
+        title: ""
       },
       search: "",
       open: false
@@ -69,6 +72,7 @@ class App extends Component {
     }
     this.handleCloseModal();
   };
+  handleSubmitGroup = () => {};
 
   handleUpdate = data => {
     fetch(`${API}/${data.id}`, {
@@ -103,9 +107,7 @@ class App extends Component {
 
   handleFindOne = () => {
     const { search } = this.state.search;
-    const todoSearchItem = this.state.todos.filter(
-      item => item.title === search
-    );
+    const todoSearchItem = this.state.todos.filter(item => item.title === search);
     this.setState({
       todos: [todoSearchItem[0]]
     });
@@ -144,68 +146,41 @@ class App extends Component {
     const { todos } = this.state;
     return (
       <div>
-        <Navbar color="dark" light expand="md">
-          <NavbarBrand className="todo-list-app">
-            DESAFIO SUPERO - TODO LIST
-          </NavbarBrand>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <FindIconButton
-                handleFindOne={e => this.handleFindOne(e)}
-                searchInput={e => this.searchInput(e)}
-                refresh={e => this.findAll(e)}
-              />
-            </NavItem>
-          </Nav>
-        </Navbar>
-        <ModalTodo
-          todo={this.state.todo}
+        <NavBar />
+        <Groups
+          group={this.state.group}
           submit={this.handleSubmit}
           onChangeModal={this.onChangeModal}
           handleOpenModal={e => this.handleOpenModal(e)}
           handleCloseModal={e => this.handleCloseModal(e)}
           open={this.state.open}
         />
+        <ModalTodo
+          todo={this.state.todo}
+          submit={this.handleSubmitGroup}
+          onChangeModal={this.onChangeModal}
+          handleOpenModal={e => this.handleOpenModal(e)}
+          handleCloseModal={e => this.handleCloseModal(e)}
+          open={this.state.open}
+        />
 
-        <Table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Titulo</th>
-              <th>Descrição</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {todos.length > 0 &&
-              todos.map((row, index) => (
-                <tr key={row.id}>
-                  <th scope="row" width="5%">
-                    {index + 1}
-                  </th>
-                  <td width="30%">{row.title}</td>
-                  <td width="40%">{row.content}</td>
-                  <td width="10%">{!row.status ? "Pendente" : "Concluído"}</td>
-                  <td width="15%">
-                    <FinishTaskIconButton
-                      handleFinishTask={e => this.handleFinishTask(row.id, e)}
-                    />
-                    <DeleteIconButton
-                      onClick={e => this.handleDelete(row.id, e)}
-                    />
-                    <UpdateIconButton
-                      handleOpenUpdate={e => this.handleOpenUpdate(row.id, e)}
-                      ariaLabel="Editar"
-                    />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+        <div className="div-todos">
+          {todos.length > 0 &&
+            todos.map((row, index) => (
+              <div class="card">
+                <div class="container">
+                  {!row.status ? "Pendente" : "Concluído"}
+                  <h4>{row.title}</h4>
+                  <FinishTaskIconButton handleFinishTask={e => this.handleFinishTask(row.id, e)} />
+                  <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
+                  <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdate(row.id, e)} ariaLabel="Editar" />
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     );
   }
 }
 
-export default App;
+export default Todo;

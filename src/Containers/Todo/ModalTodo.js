@@ -1,37 +1,21 @@
 import React from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import Modal from "react-modal";
 import "./ModalTodo.css";
+
 class ModalTodo extends React.Component {
   render() {
-    const {
-      todo,
-      submit,
-      onChangeModal,
-      handleOpenModal,
-      handleCloseModal,
-      open
-    } = this.props;
+    const { todo, submit, onChangeModal, handleOpenModal, handleCloseModal, open } = this.props;
 
     return (
       <div>
-        <Button color="success" size="lg" onClick={handleOpenModal}>
+        <button color="success" size="lg" onClick={handleOpenModal}>
           + ADICIONAR
-        </Button>
-        <Modal isOpen={open} toggle={handleOpenModal}>
-          <ModalHeader toggle={handleCloseModal}>
-            Adicionar To Do
-            <br />
-            <span
-              className={
-                !todo.status
-                  ? "tag-status-todo-pendent"
-                  : "tag-status-todo-conc"
-              }
-            >
-              {!todo.status ? "Pendente" : "Concluido"}
-            </span>
-          </ModalHeader>
-          <ModalBody>
+        </button>
+        <Modal isOpen={open}>
+          <h4>Adicionar To Do</h4>
+          <div>
+            <span className={!todo.status ? "tag-status-todo-pendent" : "tag-status-todo-conc"}>{!todo.status ? "Pendente" : "Concluido"}</span>
+
             <div className="form-group">
               <input
                 placeholder="Titulo"
@@ -56,15 +40,15 @@ class ModalTodo extends React.Component {
                 onChange={event => onChangeModal(event)}
               />
             </div>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={handleCloseModal}>
+          </div>
+          <div>
+            <button color="secondary" onClick={handleCloseModal}>
               CANCELAR
-            </Button>
-            <Button color="primary" onClick={submit} disabled={!todo.title}>
+            </button>
+            <button color="primary" onClick={submit} disabled={!todo.title}>
               SALVAR
-            </Button>
-          </ModalFooter>
+            </button>
+          </div>
         </Modal>
       </div>
     );

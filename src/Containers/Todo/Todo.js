@@ -366,7 +366,7 @@ class Todo extends Component {
                             items.length > 0 &&
                             items.map((item, index) =>
                               item.todoId.id === row.id ? (
-                                <div key={item.id}>
+                                <div className="todo-item-card" key={item.id}>
                                   <hr />
                                   <h6>{item.title}</h6>
                                   <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />

@@ -22,10 +22,12 @@
 .login-container input[type=text] {
     border: none;
     margin-right: 1%;
+    padding: 1%;
 }
 .login-container input[type=password] {
     border: none;
     margin-right: 0.5%;
+    padding: 1%;
 }
 .login-container button {
     background-color: dodgerblue;

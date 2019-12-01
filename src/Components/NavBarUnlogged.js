@@ -8,8 +8,8 @@ class NavBarUnlogged extends React.Component {
             <div className="topnav">
                 <h2 className="textoprincipal">To-dos</h2>
                 <div className="login-container">
-                    <input type="text" placeholder="Username" name="username"/>
-                    <input type="password" placeholder="Password" name="psw"/>
+                    <input type="text" placeholder="Usuário" name="username"/>
+                    <input type="password" placeholder="Senha" name="psw"/>
                     <button>Login</button>
                 </div>
             </div>

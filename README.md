@@ -1,8 +1,4 @@
-## Odolir Junior - Desafio Supero (FRONT-END)
-
-Todos os items solicitados foram atendidos.
-
-Como base do projeto, foi utilizado React JS.
+## Trabalho M3 (FRONT-END)
 
 ### Requisitos:
 
@@ -16,21 +12,3 @@ Para iniciar a aplicação basta executar os seguintes comandos:
 - `npm start`
 
 a aplicação estará disponivel no seguinte endereço: `http://localhost:3000/`
-
-#### Telas da aplicação:
-
-Abaixo algumas capturas de tela da aplicação:
-
-###### Listagem de To Do
-
-![alt text](/public/img/docs/list.PNG)
-
-###### Modal para cadastro de To Do
-
-![alt  text](public/img/docs/modal.PNG)
-
-###### Busca de To Do pelo titulo
-
-Além dos requisitos solicitados, desenvolvi a busca de um determinado item.
-
-![alt  text](public/img/docs/search.png)

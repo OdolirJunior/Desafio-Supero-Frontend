@@ -27,18 +27,6 @@ class ModalTodo extends React.Component {
                 onChange={event => onChangeModal(event)}
               />
             </div>
-            <div className="form-group">
-              <input
-                placeholder="Descrição"
-                className="form-control"
-                type="text-area"
-                required
-                maxLength="45"
-                name="content"
-                value={todo.content}
-                onChange={event => onChangeModal(event)}
-              />
-            </div>
           </div>
           <div>
             <button color="secondary" onClick={handleCloseModal}>

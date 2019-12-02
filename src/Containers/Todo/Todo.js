@@ -142,7 +142,7 @@ class Todo extends Component {
     } else {
       this.handleSaveGroup(data);
     }
-    this.handleCloseModal();
+    this.handleCloseModalGroup();
   };
 
   handleSubmitItem = () => {
@@ -188,6 +188,7 @@ class Todo extends Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     }).then(this.findAllGroup());
+    this.findAllGroup();
   };
 
   async handleSaveGroup(data) {
@@ -365,7 +366,6 @@ class Todo extends Component {
                           </span>
                           <h5>{row.title}</h5>
                           <FinishTaskIconButton handleFinishTask={e => this.handleFinishTask(row.id, e)} />
-                          <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
                           <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdate(row.id, e)} ariaLabel="Editar" />
                           <TodoItem
                             todoItem={this.state.todoItem}
@@ -382,7 +382,6 @@ class Todo extends Component {
                                 <div className="todo-item-card" key={item.id}>
                                   <hr />
                                   <h6>{item.title}</h6>
-                                  <DeleteIconButton onClick={e => this.handleDelete(row.id, e)} />
                                   <UpdateIconButton handleOpenUpdate={e => this.handleOpenUpdateItem(item.id, e)} ariaLabel="Editar" />
                                   <hr />
                                 </div>

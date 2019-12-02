@@ -7,7 +7,7 @@ class UpdateIconButton extends React.Component {
       <button
         className="btn"
         onClick={this.props.handleOpenUpdate}
-        title="Editar tarefa"
+        title="Editar"
       >
         <FaPen />
       </button>

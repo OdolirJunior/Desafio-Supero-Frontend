@@ -52,7 +52,7 @@ class NavBarUnlogged extends React.Component {
       let psw = loginCookies[1].split("=")[1]
 
       this.refs.username.value = username
-      this.refs.pwd.value = psw
+      this.refs.psw.value = psw
   }
 
   render() {
@@ -61,7 +61,7 @@ class NavBarUnlogged extends React.Component {
         <h2 className="textoprincipal">To-dos</h2>
         <div className="login-container">
           <input type="text" maxLength="200"  placeholder="Usuário" name="username" id="username" ref="username" required onChange={e => this.handleChange(e)} />
-          <input type="password" maxLength="200"  placeholder="Senha" name="psw" id="psw" ref="pwd" required onChange={e => this.handleChange(e)} />
+          <input type="password" maxLength="200"  placeholder="Senha" name="psw" id="psw" ref="psw" required onChange={e => this.handleChange(e)} />
           <button onClick={() => this.login()}>Login</button>
         </div>
       </div>

@@ -6,10 +6,14 @@ import Login from "./Containers/Login/Login";
 class Routes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLogged: false };
+    this.state = { isAuthenticated: false };
   }
-  isAuthenticated() {
-    console.log(document.cookie);
+  async isAuthenticated() {
+    let cookie = (await document.cookie) && document.cookie.split("; ");
+
+    if (cookie[2]) {
+      await this.setState({ isAuthenticated: true });
+    }
   }
 
   componentDidMount() {
@@ -17,7 +21,7 @@ class Routes extends React.Component {
   }
 
   render() {
-    return this.state.isLogged ? (
+    return this.state.isAuthenticated ? (
       <Router history={this.props.history}>
         <Switch>
           <Route path="/todos" exact component={() => <Todo />} />

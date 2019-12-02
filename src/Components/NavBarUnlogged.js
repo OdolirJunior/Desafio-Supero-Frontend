@@ -8,8 +8,7 @@ class NavBarUnlogged extends React.Component {
       user: {
         username: "",
         psw: ""
-      },
-      userGet: {}
+      }
     };
   }
   async handleChange(e) {
@@ -24,10 +23,13 @@ class NavBarUnlogged extends React.Component {
     })
       .then(response => response.json())
       .then(userGet => {
-        id = "user";
-        document.cookie = id + "=" + userGet.value;
+        if (userGet) {
+          let id = "user";
+          document.cookie = id + "=" + userGet.value;
+        }
       });
     this.setLoginCookies();
+    window.location.reload();
   }
   setLoginCookies = () => {
     let id;
@@ -47,13 +49,14 @@ class NavBarUnlogged extends React.Component {
   }
 
   getLoginCookies = () => {
-    let loginCookies = document.cookie.split("; ");
+    let loginCookies = document.cookie && document.cookie.split("; ");
+    if (loginCookies) {
+      let username = loginCookies[0].split("=")[1];
+      let psw = loginCookies[1].split("=")[1];
 
-    let username = loginCookies[0].split("=")[1];
-    let psw = loginCookies[1].split("=")[1];
-
-    this.refs.username.value = username;
-    this.refs.pwd.value = psw;
+      this.refs.username.value = username;
+      this.refs.psw.value = psw;
+    }
   };
 
   render() {
@@ -71,7 +74,7 @@ class NavBarUnlogged extends React.Component {
             required
             onChange={e => this.handleChange(e)}
           />
-          <input type="password" maxLength="200" placeholder="Senha" name="psw" id="psw" ref="pwd" required onChange={e => this.handleChange(e)} />
+          <input type="password" maxLength="200" placeholder="Senha" name="psw" id="psw" ref="psw" required onChange={e => this.handleChange(e)} />
           <button onClick={() => this.login()}>Login</button>
         </div>
       </div>

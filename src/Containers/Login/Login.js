@@ -25,6 +25,14 @@ class Login extends Component {
   };
 
   submit() {
+    let password = document.getElementById("password").value
+    let passwordRetyped = document.getElementById("psw-repeat").value
+
+    if (!(password === passwordRetyped)){
+      window.alert("Senha repetida incorretamente");
+      return
+    }
+
     try {
       fetch(`${API}`, {
         method: "POST",
@@ -85,7 +93,7 @@ class Login extends Component {
             />
 
             <label htmlFor="psw">
-              <b>Password</b>
+              <b>Senha</b>
             </label>
             <input
               type="password"
@@ -94,13 +102,14 @@ class Login extends Component {
               onChange={e => this.onChange(e)}
               placeholder="Digitar Senha"
               name="password"
+              id="password"
               required
             />
 
             <label htmlFor="psw-repeat">
-              <b>Repeat Password</b>
+              <b>Repita a senha</b>
             </label>
-            <input type="password" maxLength="200" className="cadastrofield" placeholder="Repetir Senha" name="psw-repeat" required />
+            <input type="password" maxLength="200" className="cadastrofield" placeholder="Repetir Senha" name="psw-repeat" id="psw-repeat" required />
 
             <hr />
 

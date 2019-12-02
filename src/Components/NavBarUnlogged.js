@@ -17,19 +17,24 @@ class NavBarUnlogged extends React.Component {
     });
   }
   async login() {
-    await fetch(`${API}/${this.state.user.username}/${this.state.user.psw}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(response => response.json())
-      .then(userGet => {
-        if (userGet) {
-          let id = "user";
-          document.cookie = id + "=" + userGet.value;
-        }
-      });
-    await this.setLoginCookies();
-    await window.location.reload();
+    try {
+      await fetch(`${API}/${this.state.user.username}/${this.state.user.psw}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+          .then(response => response.json())
+          .then(userGet => {
+            if (userGet) {
+              let id = "user";
+              document.cookie = id + "=" + userGet.value;
+            }
+          });
+      await this.setLoginCookies();
+      await window.location.reload();
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
   setLoginCookies = () => {
     let id;
@@ -42,21 +47,6 @@ class NavBarUnlogged extends React.Component {
     id = "psw";
     value = document.getElementById(id).value;
     document.cookie = id + "=" + value;
-  };
-
-  componentDidMount() {
-    this.getLoginCookies();
-  }
-
-  getLoginCookies = () => {
-    let loginCookies = document.cookie && document.cookie.split("; ");
-    if (loginCookies) {
-      let username = loginCookies[0].split("=")[1];
-      let psw = loginCookies[1].split("=")[1];
-
-      this.refs.username.value = username;
-      this.refs.psw.value = psw;
-    }
   };
 
   render() {

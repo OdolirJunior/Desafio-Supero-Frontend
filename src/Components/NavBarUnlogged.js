@@ -16,8 +16,8 @@ class NavBarUnlogged extends React.Component {
       user: { ...this.state.user, [e.target.name]: e.target.value }
     });
   }
-  login() {
-    fetch(`${API}/${this.state.user.username}/${this.state.user.psw}`, {
+  async login() {
+    await fetch(`${API}/${this.state.user.username}/${this.state.user.psw}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     })
@@ -28,8 +28,8 @@ class NavBarUnlogged extends React.Component {
           document.cookie = id + "=" + userGet.value;
         }
       });
-    this.setLoginCookies();
-    window.location.reload();
+    await this.setLoginCookies();
+    await window.location.reload();
   }
   setLoginCookies = () => {
     let id;

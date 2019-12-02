@@ -10,13 +10,8 @@ class NavBarLogged extends React.Component {
   }
 
   logout() {
-      let cookie = (document.cookie) && document.cookie.split("; ");
-
-      if (cookie[2]) {
-          cookie[2] = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = cookie
-      }
-      console.log(cookie)
+    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+    window.location.reload();
   }
 
   render() {
@@ -24,8 +19,10 @@ class NavBarLogged extends React.Component {
       <div className="topnav">
         <h2 className="textoprincipal">To-dos</h2>
         <div className="login-container">
-            {this.myName()}
-            <button className="logout-button" onClick={this.logout}>Logout</button>
+          {this.myName()}
+          <button className="logout-button" onClick={this.logout}>
+            Logout
+          </button>
         </div>
       </div>
     );

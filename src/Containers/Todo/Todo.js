@@ -9,6 +9,7 @@ import FinishTaskIconButton from "../../Components/FinishTaskIconButton";
 import "./Todo.css";
 const API = "/todos";
 const API_GROUP = "/grouptodos";
+const API_GROUP_FIND = "/grouptodosbyuser";
 const API_ITEM = "/todositem";
 
 class Todo extends Component {
@@ -236,8 +237,20 @@ class Todo extends Component {
       });
   };
 
-  findAllGroup = () => {
-    fetch(API_GROUP, {
+  findAllGroup = async () => {
+    let id = await "";
+    let cookie = (await document.cookie) && document.cookie.split("; ");
+    if (cookie && cookie.length > 0) {
+      await cookie.forEach(data => {
+        if (data.includes("user=")) {
+          let info = data.split("=");
+          if (info && info[1]) {
+            id = info[1];
+          }
+        }
+      });
+    }
+    await fetch(`${API_GROUP_FIND}/${id}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     })

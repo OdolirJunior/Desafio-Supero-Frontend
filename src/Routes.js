@@ -11,8 +11,17 @@ class Routes extends React.Component {
   async isAuthenticated() {
     let cookie = (await document.cookie) && document.cookie.split("; ");
 
-    if (cookie[2]) {
-      await this.setState({ isAuthenticated: true });
+    if (cookie && cookie.length > 0) {
+      cookie.forEach(data => {
+        let dataSplit = data.split("=");
+        dataSplit &&
+          dataSplit.length > 0 &&
+          dataSplit.forEach(item => {
+            if (item === "user") {
+              this.setState({ isAuthenticated: true });
+            }
+          });
+      });
     }
   }
 

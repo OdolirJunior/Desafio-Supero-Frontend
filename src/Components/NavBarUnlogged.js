@@ -15,6 +15,7 @@ class NavBarUnlogged extends React.Component {
     await this.setState({
       user: { ...this.state.user, [e.target.name]: e.target.value }
     });
+    console.log(this.state.user);
   }
   async login() {
     try {
@@ -22,18 +23,19 @@ class NavBarUnlogged extends React.Component {
         method: "GET",
         headers: { "Content-Type": "application/json" }
       })
-          .then(response => response.json())
-          .then(userGet => {
-            if (userGet) {
-              let id = "user";
-              document.cookie = id + "=" + userGet.value;
-            }
-          });
-      await this.setLoginCookies();
-      await window.location.reload();
-    }
-    catch (err) {
-      console.log(err)
+        .then(response => response.json())
+        .then(userGet => {
+          if (userGet && !userGet.status) {
+            let id = "user";
+            document.cookie = id + "=" + userGet.value;
+            this.setLoginCookies();
+            window.location.reload();
+          } else {
+            window.alert("Usuario e senha invalido");
+          }
+        });
+    } catch (err) {
+      console.log(err);
     }
   }
   setLoginCookies = () => {

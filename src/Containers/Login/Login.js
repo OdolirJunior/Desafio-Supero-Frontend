@@ -45,13 +45,13 @@ class Login extends Component {
             <hr/>
 
             <label htmlFor="email"><b>Usuário</b></label>
-            <input type="text" className="cadastrofield" placeholder="Digitar Usuário" name="usuario" required/>
+            <input type="text" maxLength="200" className="cadastrofield" placeholder="Digitar Usuário" name="usuario" required/>
 
             <label htmlFor="psw"><b>Password</b></label>
-            <input type="password" className="cadastrofield" placeholder="Digitar Senha" name="psw" required/>
+            <input type="password" maxLength="200" className="cadastrofield" placeholder="Digitar Senha" name="psw" required/>
 
             <label htmlFor="psw-repeat"><b>Repeat Password</b></label>
-            <input type="password" className="cadastrofield" placeholder="Repetir Senha" name="psw-repeat" required/>
+            <input type="password" maxLength="200" className="cadastrofield" placeholder="Repetir Senha" name="psw-repeat" required/>
 
             <hr/>
 

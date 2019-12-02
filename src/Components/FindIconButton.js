@@ -13,6 +13,7 @@ class FinishTaskIconButton extends React.Component {
         <input
           name="search"
           type="text"
+          maxLength="200"
           onChange={this.props.searchInput}
           className="form-control"
           placeholder="Buscar (digite o titulo)"

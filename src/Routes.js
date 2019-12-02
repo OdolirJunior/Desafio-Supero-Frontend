@@ -8,6 +8,13 @@ class Routes extends React.Component {
     super(props);
     this.state = { isLogged: false };
   }
+  isAuthenticated() {
+    console.log(document.cookie);
+  }
+
+  componentDidMount() {
+    this.isAuthenticated();
+  }
 
   render() {
     return this.state.isLogged ? (

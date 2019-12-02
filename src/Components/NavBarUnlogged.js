@@ -24,44 +24,54 @@ class NavBarUnlogged extends React.Component {
     })
       .then(response => response.json())
       .then(userGet => {
-        this.setState({ userGet });
+        id = "user";
+        document.cookie = id + "=" + userGet.value;
       });
-    this.setLoginCookies()
+    this.setLoginCookies();
   }
   setLoginCookies = () => {
-      let id
-      let value
+    let id;
+    let value;
 
-      id = "username"
-      value = document.getElementById(id).value
-      document.cookie = id + "=" + value
+    id = "username";
+    value = document.getElementById(id).value;
+    document.cookie = id + "=" + value;
 
-      id = "psw"
-      value = document.getElementById(id).value
-      document.cookie = id + "=" + value
-  }
+    id = "psw";
+    value = document.getElementById(id).value;
+    document.cookie = id + "=" + value;
+  };
 
   componentDidMount() {
-      this.getLoginCookies()
+    this.getLoginCookies();
   }
 
   getLoginCookies = () => {
-      let loginCookies = document.cookie.split("; ")
+    let loginCookies = document.cookie.split("; ");
 
-      let username = loginCookies[0].split("=")[1]
-      let psw = loginCookies[1].split("=")[1]
+    let username = loginCookies[0].split("=")[1];
+    let psw = loginCookies[1].split("=")[1];
 
-      this.refs.username.value = username
-      this.refs.pwd.value = psw
-  }
+    this.refs.username.value = username;
+    this.refs.pwd.value = psw;
+  };
 
   render() {
     return (
       <div className="topnav">
         <h2 className="textoprincipal">To-dos</h2>
         <div className="login-container">
-          <input type="text" maxLength="200"  placeholder="Usuário" name="username" id="username" ref="username" required onChange={e => this.handleChange(e)} />
-          <input type="password" maxLength="200"  placeholder="Senha" name="psw" id="psw" ref="pwd" required onChange={e => this.handleChange(e)} />
+          <input
+            type="text"
+            maxLength="200"
+            placeholder="Usuário"
+            name="username"
+            id="username"
+            ref="username"
+            required
+            onChange={e => this.handleChange(e)}
+          />
+          <input type="password" maxLength="200" placeholder="Senha" name="psw" id="psw" ref="pwd" required onChange={e => this.handleChange(e)} />
           <button onClick={() => this.login()}>Login</button>
         </div>
       </div>

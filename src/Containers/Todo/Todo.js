@@ -134,15 +134,28 @@ class Todo extends Component {
     }
     this.handleCloseModal();
   };
-  handleSubmitGroup = () => {
+  handleSubmitGroup = async () => {
     let data = {};
     data = this.state.group;
-    if (!!this.state.group.id) {
-      this.handleUpdateGroup(data);
-    } else {
-      this.handleSaveGroup(data);
+    let id = await "";
+    let cookie = (await document.cookie) && document.cookie.split("; ");
+    if (cookie && cookie.length > 0) {
+      await cookie.forEach(data => {
+        if (data.includes("user=")) {
+          let info = data.split("=");
+          if (info && info[1]) {
+            id = info[1];
+          }
+        }
+      });
     }
-    this.handleCloseModalGroup();
+    if (!!this.state.group.id) {
+      await this.handleUpdateGroup(data);
+    } else {
+      data = await { ...data, userId: id };
+      await this.handleSaveGroup(data);
+    }
+    await this.handleCloseModalGroup();
   };
 
   handleSubmitItem = () => {

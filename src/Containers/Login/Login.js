@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import NavBarUnlogged from "../../Components/NavBarUnlogged";
 import Modal from "react-modal";
-import "./Logins.css"
-
+import "./Logins.css";
+const API = "/users";
 class Login extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {open: false}
+    this.state = { open: false , user:{
+      username:'', senha:''
+    }};
   }
 
   handleOpenModal = () => {
@@ -19,22 +20,34 @@ class Login extends Component {
     this.setState({ todo: {} });
   };
 
-  render() {
-    return  (
-      <div>
+  submit() {
+    try {
+      await fetch(`${API}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      await this.findAllItem();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
+  render() {
+    return (
+      <div>
         <NavBarUnlogged />
 
         <div>
-          <br/>
+          <br />
           <h1 className="center">Bem vindo!</h1>
           <h2 className="center">Faça login para acessar seus grupos.</h2>
-          <br/>
+          <br />
           <h4 className="center">Ou cadastre-se:</h4>
         </div>
 
         <div className="center">
-          <button color="secondary" className="botaoabrircadastro" onClick={()=>this.handleOpenModal()}>
+          <button color="secondary" className="botaoabrircadastro" onClick={() => this.handleOpenModal()}>
             Cadastrar
           </button>
         </div>
@@ -42,27 +55,33 @@ class Login extends Component {
         <Modal isOpen={this.state.open}>
           <div>
             <h1>Cadastro</h1>
-            <hr/>
+            <hr />
 
-            <label htmlFor="email"><b>Usuário</b></label>
-            <input type="text" maxLength="200" className="cadastrofield" placeholder="Digitar Usuário" name="usuario" required/>
+            <label htmlFor="email">
+              <b>Usuário</b>
+            </label>
+            <input type="text" maxLength="200" className="cadastrofield" placeholder="Digitar Usuário" name="usuario" required />
 
-            <label htmlFor="psw"><b>Password</b></label>
-            <input type="password" maxLength="200" className="cadastrofield" placeholder="Digitar Senha" name="psw" required/>
+            <label htmlFor="psw">
+              <b>Password</b>
+            </label>
+            <input type="password" maxLength="200" className="cadastrofield" placeholder="Digitar Senha" name="psw" required />
 
-            <label htmlFor="psw-repeat"><b>Repeat Password</b></label>
-            <input type="password" maxLength="200" className="cadastrofield" placeholder="Repetir Senha" name="psw-repeat" required/>
+            <label htmlFor="psw-repeat">
+              <b>Repeat Password</b>
+            </label>
+            <input type="password" maxLength="200" className="cadastrofield" placeholder="Repetir Senha" name="psw-repeat" required />
 
-            <hr/>
+            <hr />
 
-            <button type="submit" className="botaocadastro">Cadastrar</button>
-            <button color="secondary" className="botaocancelar" onClick={()=>this.handleCloseModal()}>
+            <button type="submit" onClick={() => this.submit()} className="botaocadastro">
+              Cadastrar
+            </button>
+            <button color="secondary" className="botaocancelar" onClick={() => this.handleCloseModal()}>
               CANCELAR
             </button>
-
           </div>
         </Modal>
-
       </div>
     );
   }

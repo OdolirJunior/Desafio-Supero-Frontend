@@ -6,9 +6,13 @@ const API = "/users";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false , user:{
-      username:'', senha:''
-    }};
+    this.state = {
+      open: false,
+      user: {
+        user: "",
+        password: ""
+      }
+    };
   }
 
   handleOpenModal = () => {
@@ -22,16 +26,26 @@ class Login extends Component {
 
   submit() {
     try {
-      await fetch(`${API}`, {
+      fetch(`${API}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify(this.state.user)
+      }).then(data => {
+        window.alert("Usuario criado com sucesso!");
       });
-      await this.findAllItem();
     } catch (err) {
       console.log(err);
     }
   }
+  onChange = event => {
+    this.setState({
+      user: {
+        ...this.state.user,
+        [event.target.name]: event.target.value
+      }
+    });
+    console.log(this.state.user);
+  };
 
   render() {
     return (
@@ -60,12 +74,28 @@ class Login extends Component {
             <label htmlFor="email">
               <b>Usuário</b>
             </label>
-            <input type="text" maxLength="200" className="cadastrofield" placeholder="Digitar Usuário" name="usuario" required />
+            <input
+              type="text"
+              maxLength="200"
+              className="cadastrofield"
+              onChange={e => this.onChange(e)}
+              placeholder="Digitar Usuário"
+              name="user"
+              required
+            />
 
             <label htmlFor="psw">
               <b>Password</b>
             </label>
-            <input type="password" maxLength="200" className="cadastrofield" placeholder="Digitar Senha" name="psw" required />
+            <input
+              type="password"
+              maxLength="200"
+              className="cadastrofield"
+              onChange={e => this.onChange(e)}
+              placeholder="Digitar Senha"
+              name="password"
+              required
+            />
 
             <label htmlFor="psw-repeat">
               <b>Repeat Password</b>

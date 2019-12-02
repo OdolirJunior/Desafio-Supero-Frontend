@@ -3,10 +3,19 @@ import "./NavBar.css";
 
 class NavBarLogged extends React.Component {
   myName() {
-    let myName = document.cookie && document.cookie.split("; ");
-    if (myName[0]) {
-      return myName[0].split("=")[1];
+    let id = "";
+    let cookie = document.cookie && document.cookie.split("; ");
+    if (cookie && cookie.length > 0) {
+      cookie.forEach(data => {
+        if (data.includes("username=")) {
+          let info = data.split("=");
+          if (info && info[1]) {
+            id = info[1];
+          }
+        }
+      });
     }
+    return id;
   }
 
   logout() {
